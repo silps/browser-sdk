@@ -6,9 +6,9 @@ Below is a list of the basic methods included in this SDK.
 
 ## Implementing the SDK
 
-In order to start using the SDK all you would need to do is to include the `relayr.js` file in your project:
+In order to start using the SDK all you would need to do is to include the `relayr-browser-sdk.min.js` file in your project:
 
-	<script src="/assets/scripts/relayr.js"></script>
+	<script src="https://developer.relayr.io/relayr-browser-sdk.min.js"></script>
 
 ## Using the SDK
 
