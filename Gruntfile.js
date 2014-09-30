@@ -21,16 +21,20 @@ module.exports = function(grunt) {
         src: ["build/relayr.min.js", "vendor/pubnub.min.js"],
         dest: "build/<%= pkg.name %>.min.js"
       }
+    },
+    jshint: {
+      all: ['Gruntfile.js', 'lib/*.js']
     }
 
   });
 
   // Load the plugin that provides the "uglify" task. 
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-curl');
 
   // Default task(s).
-  grunt.registerTask('default', ['curl','uglify','concat']);
+  grunt.registerTask('default', ['jshint','curl','uglify','concat']);
 
 };
