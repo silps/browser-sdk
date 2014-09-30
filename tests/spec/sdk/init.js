@@ -178,6 +178,17 @@ describe('User', function(){
     
   });
 
+  it('logout should remove key from storage', function(){
+    localStorage.setItem("relayrToken",token);
+
+    var relayr = relayrInit();
+    var storageToken=localStorage.getItem("relayrToken")
+    
+    relayr.user().logout();
+    var check = localStorage.getItem("relayrToken");
+    expect(check).toBe(null);
+  });
+
   afterEach(function() {
    localStorage.removeItem("relayrToken")
   });
@@ -195,6 +206,54 @@ describe("devices", function(){
       
     expect(f).toThrow(new Error("Provide the method incomingData within your parameters"));
 
+  });
+});
+
+
+describe('Transmitters', function(){
+  it('it should throw an error when accessing transmitters without being logged in', function() {
+    var relayr = relayrInit();
+
+    var f = function(){
+      relayr.transmitters().getTransmitters({
+
+      });
+    };
+      
+    expect(f).toThrow(new Error("You must be logged in to access this method."));
+
+  });
+
+  it('transmitters should give an array of transmitters', function() {
+    var relayr = relayrInit();
+
+    localStorage.setItem("relayrToken",token);
+    fakeAjax(function(requests){
+      relayr.login({
+        success: function(){
+
+        },
+        error: function(){
+
+          callbackCalled = true;
+        }
+      });
+     
+      var req= requests[0];
+      var transmitterCallback = false;
+
+      expect(req.url).toBe("https://api.relayr.io/oauth2/user-info");
+      req.respond(200, {}, JSON.stringify({id:"42387492730487324", email:"something@something.com", name:"billybob"}));
+      relayr.transmitters().getTransmitters(function(transmitters){
+
+        expect(transmitters.length).toBe(0);
+        transmitterCallbackResult = transmitters;
+      });
+
+      var req= requests[1];
+      req.respond(200, {}, JSON.stringify([]));
+      expect(transmitterCallbackResult).toBeDefined();
+    });
   });
 });
 
