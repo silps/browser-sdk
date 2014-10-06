@@ -1,4 +1,4 @@
-# The relayr JavaScript SDK
+# The relayr JavaScript micro SDK
 
 Welcome to the relayr JavaScript SDK. This easy to use JavaScript implementation will allow you to quickly create relayr browser side web applications, start receiving data from your sensors and display the data received in your browser. 
 Below is a list of the basic methods included in this SDK.
